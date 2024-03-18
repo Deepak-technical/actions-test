@@ -20,13 +20,13 @@ jobs:
         run: |
           FRONTEND_TAG=${{ github.run_number }}
           docker build -t frontend:$FRONTEND_TAG ./frontend
-          echo "::set-output name=frontend_tag::$FRONTEND_TAG"
+          echo "frontend_tag=${FRONTEND_TAG}" >> $GITHUB_ENV
 
       - name: Build backend Docker image
         run: |
           BACKEND_TAG=${{ github.run_number }}
           docker build -t backend:$BACKEND_TAG ./backend
-          echo "::set-output name=backend_tag::$BACKEND_TAG"
+          echo "backend_tag=${BACKEND_TAG}" >> $GITHUB_ENV
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -36,13 +36,12 @@ jobs:
 
       - name: Push frontend Docker image to Docker Hub
         run: |
-          FRONTEND_TAG=${{ steps.build_and_update_images.outputs.frontend_tag }}
+          FRONTEND_TAG=${{ env.frontend_tag }}
           docker tag frontend:$FRONTEND_TAG ${{ secrets.DOCKERHUB_USERNAME }}/frontend:$FRONTEND_TAG
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:$FRONTEND_TAG
 
       - name: Push backend Docker image to Docker Hub
         run: |
-          BACKEND_TAG=${{ steps.build_and_update_images.outputs.backend_tag }}
+          BACKEND_TAG=${{ env.backend_tag }}
           docker tag backend:$BACKEND_TAG ${{ secrets.DOCKERHUB_USERNAME }}/backend:$BACKEND_TAG
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:$BACKEND_TAG
-
