@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend:
-    image: deepakprasad/frontend:4
+    image: deepakprasad/frontend:9
     ports:
       - "80:80"
     depends_on:
@@ -13,7 +13,7 @@ services:
 
   backend:
   
-    image: deepakprasad/backend:4
+    image: deepakprasad/backend:9
     ports:
       - "5000:5000"
     networks:
