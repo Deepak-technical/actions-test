@@ -47,6 +47,8 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:$BACKEND_TAG
       - name: Update Docker Compose file
         run: |
+          git config user.email deepakakash156@gmail.com
+          git config user.name deepak_technical
           sed -i "s|image: deepakprasad/frontend:.*|image: deepakprasad/frontend:${{ env.frontend_tag }}|g" docker-compose.yaml
           sed -i "s|image: deepakprasad/backend:.*|image: deepakprasad/backend:${{ env.backend_tag }}|g" docker-compose.yaml
           git add docker-compose.yaml
