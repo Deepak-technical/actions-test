@@ -54,5 +54,3 @@ jobs:
           git add docker-compose.yaml
           git commit -m "Update Docker images in Docker Compose file"
           git push https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }} HEAD:main    
-
-
