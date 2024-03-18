@@ -2,9 +2,7 @@ version: '3'
 
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: deepakprasad/frontend:4
     ports:
       - "80:80"
     depends_on:
@@ -14,9 +12,8 @@ services:
     # Other configurations for your frontend service
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+  
+    image: deepakprasad/backend:4
     ports:
       - "5000:5000"
     networks:

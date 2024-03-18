@@ -45,3 +45,10 @@ jobs:
           BACKEND_TAG=${{ env.backend_tag }}
           docker tag backend:$BACKEND_TAG ${{ secrets.DOCKERHUB_USERNAME }}/backend:$BACKEND_TAG
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:$BACKEND_TAG
+      - name: Update Docker Compose file
+        run: |
+          sed -i "s|image: deepakprasad/frontend:.*|image: deepakprasad/frontend:${{ env.frontend_tag }}|g" docker-compose.yml
+          sed -i "s|image: deepakprasad/backend:.*|image: deepakprasad/backend:${{ env.backend_tag }}|g" docker-compose.yml
+          git add docker-compose.yml
+          git commit -m "Update Docker images in Docker Compose file"
+          git push https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }} HEAD:main    
